@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>moving text</title>
+	<script src='../node_modules/vue/dist/vue.js'></script>
+	<style>
+	.demo {
+		margin-top: 100px;
+		text-align: center;
+		color: red;
+	}
+</style>
+</head>
+<body>
+	<div class="demo">
+		<input type="button" value="start" @click = "move">
+		<input type="button" value="stop" @click = "stop">
+		<p>{{ msg }}</p>
+	</div>
+	<script>
+		var vm = new Vue({
+			el : '.demo',
+			data : {
+				msg : 'Hello world , how are you today, very nice to meet you! ',
+				timeId : null
+			},
+			methods : {
+				move : function(){
+
+					if(!this.timeId){
+						this.timeId = setInterval(() => {
+							var start = this.msg.substring(0,1)
+							var end = this. msg.substring(1)
+							this.msg = end + start
+						},100)
+					}	
+				},
+				stop : function(){
+					clearInterval(this.timeId)
+					this.timeId = null
+				}
+			}
+		})
+	</script>
+</body>
+</html>
