@@ -19,14 +19,14 @@
 
 				<label>
 					Name :
-					<input type="text" class="form-control" v-model="name">
+					<input type="text" class="form-control" v-model="name" @keyup.enter="add()">
 				</label>
 
 				<input type="button" value="add" class="btn btn-primary" @click="add()">
 
 				<label>
 					search：
-					<input type="text" class="form-control" v-model="keywords">
+					<input type="text" class="form-control" v-model="keywords" v-focus v-color="'blue'">
 				</label>
 			</div>
 		</div>
@@ -44,14 +44,42 @@
 				<tr v-for="item in search(keywords)" :key='item.id'>
 					<td>{{ item.id }}</td>
 					<td>{{ item.name }}</td>
-					<td>{{ item.time }}</td>
-					<td><a href="" @click.prevent="del(item.id)">Delete</a></td>
+					<td>{{ item.time | dateFormat }}</td>
+					<td><a href="" @click.prevent="del(item.id)" v-color="'red'">Delete</a></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 
 	<script>
+
+		Vue.filter('dateFormat',function(date){
+			var dt = new Date(date)
+			var y = dt.getFullYear()
+			var m = dt.getMonth() + 1
+			var d = dt.getDate()
+			var hr = dt.getHours()
+			var min = dt.getMinutes()
+			var sec = dt. getSeconds()
+				m = m >= 10 ? m : '0' + m;
+				d = d >= 10 ? d : '0' + d;
+				hr = hr >= 10 ? hr : '0' + hr;
+				min = min >= 10 ? min : '0' + min;
+				sec = sec >= 10 ? sec : '0' + sec;
+			return `${y}-${m}-${d} ${hr}:${min}:${sec}`
+		})
+
+		Vue.directive('focus',{
+			inserted : function(el){
+				el.focus()
+			}
+		})
+
+		Vue.directive('color',{
+			bind : function(el,binding){
+				el.style.color = binding.value
+			}
+		})
 		var vm = new Vue({
 			el : '#app',
 			data : {
@@ -59,14 +87,14 @@
 				name : '',
 				keywords : '',
 				list : [
-					{id : 1, name : 'BMW', time : new Date().toDateString()},
-					{id : 2, name : 'Toyota', time : new Date().toDateString()},
-					{id : 3, name : 'Audi', time : new Date().toDateString()}
+					{id : 1, name : 'BMW', time : new Date()},
+					{id : 2, name : 'Toyota', time : new Date()},
+					{id : 3, name : 'Audi', time : new Date()}
 				]
 			},
 			methods : {
 				add : function(){
-					var newProduct = {id : this.id, name : this.name, time : new Date().toDateString()}
+					var newProduct = {id : this.id, name : this.name, time : new Date()}
 					this.list.push(newProduct)
 					this.id = this.name = ''
 				},
