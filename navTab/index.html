@@ -42,22 +42,58 @@
 	</div>
 	<script>
 		Vue.component('demo1',{
-			template : '<h3>I am demo1</h3>'
+			template : '<h3 @click="ct">I am demo{{ msg }}1+{{ count }}</h3>',
+			data : function(){
+				return {
+					msg : '-',
+					count : 1
+				}
+			},
+			methods : {
+				ct : function(){
+					this.count++
+				}
+			}
 		})
 		Vue.component('demo2',{
-			template : '<h3>I am demo2</h3>'
+			template : '<h3>I am demo{{ msg }}2</h3>',
+			data : function(){
+				return {
+					msg : '-'
+				}
+			}
 		})
 		Vue.component('demo3',{
-			template : '<h3>I am demo3</h3>'
+			template : '<h3>I am demo{{ msg }}3</h3>',
+			data : function(){
+				return {
+					msg : '-'
+				}
+			}
 		})
 		Vue.component('demo4',{
-			template : '<h3>I am demo4</h3>'
+			template : '<h3>I am demo{{ msg }}4</h3>',
+			data : function(){
+				return {
+					msg : '-'
+				}
+			}
 		})
 		Vue.component('demo5',{
-			template : '<h3>I am demo5</h3>'
+			template : '<h3>I am demo{{ msg }}5</h3>',
+			data : function(){
+				return {
+					msg : '-'
+				}
+			}
 		})
 		Vue.component('demo6',{
-			template : '<h3>I am demo6</h3>'
+			template : '<h3>I am demo{{ msg }}6</h3>',
+			data : function(){
+				return {
+					msg : '-'
+				}
+			}
 		})
 		var vm = new Vue({
 			el : '#app',
