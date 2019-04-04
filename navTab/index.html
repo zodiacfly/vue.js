@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="./lib/vue.js"></script>
+	<link rel="stylesheet" type="text/css" href="./lib/bootstrap.css">
+	<style>
+		h3 {
+			width: 200px;
+			height: 200px;
+			background-color: pink;
+			text-align: center;
+			line-height: 200px;
+		}
+		.v-enter,
+		.v-leave-to{
+			opacity: 0;
+			transform: translate(300px,300px) rotate(360deg);
+		}
+
+		.v-enter-active,
+		.v-leave-active {
+			transition: all 0.7s;
+		}
+	</style>
+</head>
+<body>
+	
+	<div id="app">
+		<ol class="breadcrumb">
+			<li><a href="#" @click.prevent="comName='demo1'">demo1</a></li>
+			<li><a href="#" @click.prevent="comName='demo2'">demo2</a></li>
+			<li><a href="#" @click.prevent="comName='demo3'">demo3</a></li>
+			<li><a href="#" @click.prevent="comName='demo4'">demo4</a></li>
+			<li><a href="#" @click.prevent="comName='demo5'">demo5</a></li>
+			<li><a href="#" @click.prevent="comName='demo6'">demo6</a></li>
+		</ol>
+		<transition mode="out-in">
+			<component :is="comName"></component>
+		</transition>
+		<!-- <test></test> -->
+	</div>
+	<script>
+		Vue.component('demo1',{
+			template : '<h3>I am demo1</h3>'
+		})
+		Vue.component('demo2',{
+			template : '<h3>I am demo2</h3>'
+		})
+		Vue.component('demo3',{
+			template : '<h3>I am demo3</h3>'
+		})
+		Vue.component('demo4',{
+			template : '<h3>I am demo4</h3>'
+		})
+		Vue.component('demo5',{
+			template : '<h3>I am demo5</h3>'
+		})
+		Vue.component('demo6',{
+			template : '<h3>I am demo6</h3>'
+		})
+		var vm = new Vue({
+			el : '#app',
+			data : {
+				comName : 'demo1'
+			},
+			// components : {
+			// 	test : {
+			// 		template : '<h1>I am test</h1>'
+			// 	}
+			// },
+			methods : {
+				
+			}
+		})
+	</script>
+</body>
+</html>
