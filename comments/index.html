@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>comments</title>
+	<link rel="stylesheet" type="text/css" href="./lib/bootstrap.css">
+	<script src="./lib/vue.js"></script>
+	<style>
+		.v-enter,
+		.v-leave-to {
+			opacity: 0;
+			transform: translateX(100px);
+		}
+
+		.v-enter-active,
+		.v-leave-active {
+			transition: all 1s;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<div class="header container">
+			<div class="page-header">
+				<h1>Comments</h1>
+			</div>
+		</div>
+		<my-com @func="renderCom" :my-msg="msg"></my-com>
+		<br/>
+		<div class="comments container" >
+			<transition-group appear tag="ul" class="list-group">
+				<li class="list-group-item" v-for="item in list" :key="item.id">{{ item.name}}  : {{item.comment}}<span class="pull-right">{{ item.time}}</span></li>
+			</transition-group>		
+		</div>
+	</div>
+
+	<template id="temp">
+		<div class="comments container">
+			
+			<div class="form-group">
+				<label for="input_name">Your Name</label>
+				<input type="text" class="form-control" required minlength="2" maxlength="10" placeholder="please input yout name" v-model="name" v-focus>
+			</div>
+			<div class="form-group">
+				<label for="textarea_message">{{ myMsg }} comment</label>
+				<textarea class="form-control" cols="30" rows="2" required minlength="5" maxlength="200" placeholder="please leave your comments" v-model="comment" @keyup.enter="postCom"></textarea>
+			</div>
+			<button type="submit" class="btn btn-success" @click="postCom">Post</button>
+			
+		</div>
+	</template>
+
+	<script>
+		var myCom = {
+			template : '#temp',
+			data : function(){
+				return {
+					name : '',
+					comment : ''
+				}
+			},
+			methods : {
+				postCom : function(){
+					var newCom = {id : Date.now(), name : this.name, time : new Date(), comment : this.comment}
+					var list = JSON.parse(localStorage.getItem('myData') || '[]')
+					list.unshift(newCom)
+					localStorage.setItem('myData',JSON.stringify(list))	
+					this.$emit('func')
+					this.name = this.comment = ''
+				}
+			},
+			directives : {
+				focus : {
+					inserted : function(el){
+						el.focus()
+					}
+				}
+			},
+			props : ['myMsg'] //same as 'my-msg'---------------------
+			
+		}
+		var vm = new Vue({
+			el : '#app',
+			data : {
+				list : [],
+				msg : 'New'
+			},
+			created : function(){
+				this.renderCom()
+			},
+			methods : {
+				renderCom : function(){
+					var list = JSON.parse(localStorage.getItem('myData') || '[]')
+					this.list = list
+				}
+			},
+			components : {
+				myCom
+				// myTemp : myCom
+			},
+		})
+	</script>
+</body>
+</html>
