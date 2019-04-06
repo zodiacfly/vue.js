@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Router practice</title>
+	<link rel="stylesheet" type="text/css" href="./lib/bootstrap.css">
+	<script src="./lib/vue.js"></script>
+	<script src="./lib/vue-router-3.0.1.js"></script>
+	<style>
+	form {
+		width: 300px;
+		height: 200px;
+	}
+
+	div#app {
+		width: 400px;
+		height: 300px;
+		margin: 100px auto;
+	}
+	
+</style>
+</head>
+<body>
+	<div id="app">
+		<router-link to="/account">Account</router-link>
+		<br />
+		<br />
+		<router-view></router-view>	
+	</div>
+
+	<template id="account">
+		<div class="box">
+			<router-link to="/account/login" class="btn btn-default">Login</router-link>
+			<router-link to="/account/register" class="btn btn-default">Register</router-link>
+			<router-view></router-view>	
+		</div>
+	</template>
+
+	<template id="login">
+		<form id="login_form">
+			<div class="form-group">
+				<label for="email">Email</label>
+				<input type="email" class="form-control" id="email" name="email" placeholder="Email" value="" autofocus>
+
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<a class="pull-right" href="javascript:;">forget password？</a>
+				<input type="password" class="form-control" id="password" name="password" placeholder="Password">
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox">remember me
+				</label>
+			</div>
+			<button type="button" class="btn btn-success btn-block">login</button>
+		</form>
+	</template>
+
+	<template id="register">		
+		<form>
+			<div class="form-group">
+				<label for="email">Email</label>
+				<input type="email" class="form-control" id="email" name="email" placeholder="Email" autofocus>
+			</div>
+			<div class="form-group">
+				<label for="username">User name</label>
+				<input type="text" class="form-control" id="username" name="username" placeholder="username">
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" class="form-control" id="password" name="password" placeholder="Password">
+			</div>
+			<button type="button" class="btn btn-success btn-block">register</button>
+		</form>	
+	</template>
+
+	<script>
+		var account = {
+			template : '#account'
+		}
+		var login = {
+			template : '#login'
+		}
+		var register = {
+			template : '#register'
+		}
+		var routerObj = new VueRouter({
+			routes : [
+				{
+					path : '/account',
+					component : account,
+					children : [
+						{path : 'login', component : login},
+						{path : 'register', component : register}
+					],
+				
+				}
+			],
+			linkActiveClass : 'btn btn-danger'
+		})
+		var vm = new Vue({
+			el : '#app',
+			data : {
+
+			},
+			methods : {
+
+			},
+			router : routerObj
+		})
+	</script>
+</body>
+</html>
