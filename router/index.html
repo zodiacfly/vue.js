@@ -17,6 +17,20 @@
 		margin: 100px auto;
 	}
 	
+	.v-enter {
+		opacity: 0;
+		transform: translateX(200px);
+	}
+
+	.v-leave-to {
+		opacity: 0;
+		transform: translateX(-200px);
+	}
+
+	.v-enter-active,
+	.v-leave-active {
+		transition: all 0.5s;
+	}
 </style>
 </head>
 <body>
@@ -24,14 +38,18 @@
 		<router-link to="/account">Account</router-link>
 		<br />
 		<br />
-		<router-view></router-view>	
+		<transition>
+			<router-view></router-view>	
+		</transition>
 	</div>
 
 	<template id="account">
 		<div class="box">
 			<router-link to="/account/login" class="btn btn-default">Login</router-link>
 			<router-link to="/account/register" class="btn btn-default">Register</router-link>
-			<router-view></router-view>	
+			<transition mode="out-in">
+				<router-view></router-view>	
+			</transition>
 		</div>
 	</template>
 
