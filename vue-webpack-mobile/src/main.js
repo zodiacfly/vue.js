@@ -7,8 +7,13 @@ Vue.use(VueRouter)
 
 import './lib/mui/css/mui.min.css'
 import './lib/mui/css/icons-extra.css'
+
+
 import router from './router.js'
 import { Swipe, SwipeItem } from 'mint-ui'
+
+import VueResource from 'vue-resource'
+Vue.use(VueResource)
 
 Vue.component(Swipe.name, Swipe)
 Vue.component(SwipeItem.name, SwipeItem)
