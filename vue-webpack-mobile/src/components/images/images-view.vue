@@ -10,7 +10,7 @@
 <script>
 
 	import comments from '../comments/comments.vue'
-
+	
 	export default {
 		data : function(){
 			return {
