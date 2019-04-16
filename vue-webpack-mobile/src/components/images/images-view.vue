@@ -3,10 +3,13 @@
 		<p>
 			<img :src="src" />
 		</p>
+		<comments :newid="id"></comments>
 	</div>
 </template>
 
 <script>
+
+	import comments from '../comments/comments.vue'
 
 	export default {
 		data : function(){
@@ -20,7 +23,8 @@
 		},
 		methods : {
 			showPic : function(){
-				this.$http.get('http://service.picasso.adesk.com/v1/vertical/category').then(function(result){
+				this.$http.get('http://service.picasso.adesk.com/v1/vertical/category')
+				.then(function(result){
 					
 					if(result.status===200){
 						var that = this
@@ -34,6 +38,9 @@
 					}
 				})
 			}
+		},
+		components : {
+			comments
 		}
 	}	
 </script>
